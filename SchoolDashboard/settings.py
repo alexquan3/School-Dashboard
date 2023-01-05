@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'SchoolDashboard.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'G0FmWftaf2GJ0B1D87kY',
+        'HOST': 'containers-us-west-28.railway.app',
+        'PORT': '7690',
     }
 }
 
