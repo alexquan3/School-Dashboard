@@ -13,12 +13,12 @@ def home(request):
 def classes(request):
     classes = Classes.objects.all()
     current_user = request.user
-    return render(request, 'Main/classes.html', {'classes': classes, 'current_user': current_user})
+    return render(request, 'main/classes.html', {'classes': classes, 'current_user': current_user})
 
 @login_required(login_url='login')
 def display_class(request, class_id):
     display_class = Classes.objects.get(pk=class_id)
-    return render(request, 'Main/display_class.html', {'display_class': display_class})
+    return render(request, 'main/display_class.html', {'display_class': display_class})
 
 @login_required(login_url='login')
 def add_class(request):
@@ -30,7 +30,7 @@ def add_class(request):
             form.save()
             messages.success(request, 'Class has been added')
             return redirect('add_class')
-    return render(request, 'Main/add_class.html', {'form': class_form})
+    return render(request, 'main/add_class.html', {'form': class_form})
 
 
 @login_required(login_url='login')
@@ -41,7 +41,7 @@ def update_class(request, class_id):
             update_form.save()
             messages.success(request, 'Class has been updated')
             return redirect('classes')
-    return render(request, 'Main/update_class.html', {'update_class': update_class, 'update_form': update_form})
+    return render(request, 'main/update_class.html', {'update_class': update_class, 'update_form': update_form})
 
 @login_required(login_url='login')
 def delete_class(request, class_id):
@@ -49,7 +49,7 @@ def delete_class(request, class_id):
     if request.method == 'POST':
         delete_class.delete()
         return redirect('classes')
-    return render(request, 'Main/delete_class.html', {'delete_class': delete_class})
+    return render(request, 'main/delete_class.html', {'delete_class': delete_class})
 
 @login_required(login_url='login')
 def tasks(request):
@@ -64,7 +64,7 @@ def tasks(request):
         else:
             ontime_task.append(t)
 
-    return render(request, 'Main/task.html', {'tasks': tasks,'late_task':  late_task, 'ontime_task':ontime_task, 'current_user': current_user})
+    return render(request, 'main/task.html', {'tasks': tasks,'late_task':  late_task, 'ontime_task':ontime_task, 'current_user': current_user})
 
 @login_required(login_url='login')
 def add_task(request):
@@ -74,7 +74,7 @@ def add_task(request):
             form.save()
             messages.success(request, 'Task has been added')
             return redirect('add_task')
-    return render(request, 'Main/add_task.html', {'form': form})
+    return render(request, 'main/add_task.html', {'form': form})
 
 @login_required(login_url='login')
 def update_task(request, task_id):
@@ -84,7 +84,7 @@ def update_task(request, task_id):
             update_form.save()
             messages.success(request, 'Class has been updated')
             return redirect('tasks')
-    return render(request, 'Main/update_task.html', {'update_task': update_class, 'update_form': update_form})
+    return render(request, 'main/update_task.html', {'update_task': update_class, 'update_form': update_form})
 
 @login_required(login_url='login')
 def delete_task(request, task_id):
@@ -92,12 +92,12 @@ def delete_task(request, task_id):
     if request.method == 'POST':
         delete_task.delete()
         return redirect('tasks')
-    return render(request, 'Main/delete_task.html', {'delete_task': delete_task})
+    return render(request, 'main/delete_task.html', {'delete_task': delete_task})
 
 @login_required(login_url='login')
 def display_task(request, task_id):
     display_task = Tasks.objects.get(pk=task_id)
-    return render(request, 'Main/display_task.html', {'display_task': display_task})
+    return render(request, 'main/display_task.html', {'display_task': display_task})
 
 @login_required(login_url='login')
 def search(request):
@@ -105,6 +105,6 @@ def search(request):
         searched = request.POST['searched']
         classes = Classes.objects.filter(name__icontains=searched)
         tasks = Tasks.objects.filter(name__icontains=searched)
-        return render(request, 'Main/search.html', {'searched': searched, 'classes': classes, 'tasks':tasks})
+        return render(request, 'main/search.html', {'searched': searched, 'classes': classes, 'tasks':tasks})
     else:
-        return render(request, 'Main/search.html', {})
+        return render(request, 'main/search.html', {})
