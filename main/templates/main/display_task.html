@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<br><br>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">{{display_task}}</h5>
+        <div class="card-body">
+            <h5 class="card-title">{{display_task.classes}}</h5>
+            {% if display_task.completed == True %}
+                <p class="card-text">Description: {{display_task.description}}<br>Status: Completed</p>
+            {% else %}
+                <p class="card-text">Description: {{display_task.description}}<br>Due date: {{display_task.due_date}}
+                    <br>Status: In Progress</p>
+            {% endif %}
+            
+            <a href="{% url 'tasks' %}" class="btn btn-secondary">Return</a>
+
+        </div>
+      </div>
+</div>
+{% endblock %}

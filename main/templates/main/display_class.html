@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<br><br>
+<div class="container">
+    
+    <div class="card">
+        <h5 class="card-header">{{display_class}}</h5>
+        <div class="card-body">
+            <h5 class="card-title">{{display_class.course_code}}</h5>
+            {% if display_class.completed == True %}
+                <p class="card-text">Semester: {{display_class.semester}}
+                    <br>
+                    Grade: {{display_class.grade}}
+                    <br>
+                    GPA: {{display_class.GPA}}
+                    <br>
+                    Status: Completed</p>
+            {% else %}
+                <p class="card-text">Semester: {{display_class.semester}}<br>Status: In Progress</p>
+            {% endif %}
+            
+            <a href="{% url 'home' %}" class="btn btn-secondary">Return Home</a>
+            <a href="{% url 'classes' %}" class="btn btn-secondary">Return Class</a>
+
+        </div>
+      </div>
+</div>
+{% endblock %}

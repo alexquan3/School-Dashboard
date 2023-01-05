@@ -31,25 +31,25 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="">Tasks</a>
+                    <a class="nav-link" href="{% url 'tasks' %}">Tasks</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'classes' %}">Classes</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="">Logout</a>
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="">Register</a>
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Login</a>
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </li>
                 {% endif %}
             </ul>
-            <form class="d-flex" method=POST action="">
+            <form class="d-flex" method=POST action="{% url 'search' %}">
                 {% csrf_token %}
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
                 <button class="btn btn-outline-success" type="submit">Search</button>

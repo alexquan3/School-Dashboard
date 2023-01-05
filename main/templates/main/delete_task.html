@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<br><br>
+<div class="container">
+    <div class="container">
+        <form action="" method="POST">
+            <h3>Are you sure you want to delete?</h3>
+            {% csrf_token %}
+            <a href="{% url 'tasks' %}" class="btn btn-secondary">Cancel</a> <input type="submit" value="Confirm" class="btn btn-secondary">
+    
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,22 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+    {% if messages %}
+        {% for msg in messages %}
+            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </symbol>
+            </svg>
+            <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                <div>
+                    {{msg}} 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="container justify-content-center p-4">
         <div class="container">
             <div class="row">
@@ -8,7 +24,7 @@
                     <h1> Classes </h1>
                 </div>
                 <div class="col-4 text-end">
-                    <a class="btn btn-outline-secondary btn-lg text-center" href=""> + Add Class</a>
+                    <a class="btn btn-outline-secondary btn-lg text-center" href="{% url 'add_class' %}"> + Add Class</a>
                 </div>
             </div>
         </div>
@@ -30,6 +46,7 @@
                         </div>
                         <div id="inProgress" class="card-body">
                             {% for class in classes %}
+                                {% if current_user.id == class.user_id %}
                                     {% if class.completed == False %}
                                         <br>
                                         <div class="card shadow p-2 bg-body rounded">
@@ -45,11 +62,12 @@
                                                 <h5 class="card-subtitle mb-2 text-muted">{{ class.course_code }}</h5>
                                             </div>
                                             <div class="card-footer text-muted">
-                                                <a href="" class="card-link btn btn-info">Show More</a>
-                                                <a href="" class="card-link btn btn-success">Update/Edit</a>
+                                                <a href="{% url 'display_class' class.id %}" class="card-link btn btn-info">Show More</a>
+                                                <a href="{% url 'update_class' class.id %}" class="card-link btn btn-success">Update/Edit</a>
                                             </div>
                                         </div>
                                     {% endif %}
+                                {% endif %}
                             {% endfor %}
                         </div>
                     </div>
@@ -68,6 +86,7 @@
                         </div>
                         <div id="completed" class="card-body">
                             {% for class in classes %}
+                                {% if current_user.id == class.user_id %}
                                     {% if class.completed == True %}
                                         <br>
                                         <div class="card bg-success text-dark bg-opacity-25 shadow p-2 rounded">
@@ -77,17 +96,18 @@
                                                         <h4 class="card-title">{{ class }} </h4>
                                                     </div>
                                                     <div class="col text-end">
-                                                        <a href="" class="btn btn-light"><strong>X</strong></a>
+                                                        <a href="{% url 'delete_class' class.id %}" class="btn btn-light"><strong>X</strong></a>
                                                     </div>
                                                 </div>
                                                 <h5 class="card-subtitle mb-2 text-muted">{{ class.course_code }}</h5>
                                             </div>
                                             <div class="card-footer text-muted">
-                                                <a href="" class="card-link btn btn-info">Show More</a>
-                                                <a href="" class="card-link btn btn-success">Update/Edit</a>
+                                                <a href="{% url 'display_class' class.id %}" class="card-link btn btn-info">Show More</a>
+                                                <a href="{% url 'update_class' class.id %}" class="card-link btn btn-success">Update/Edit</a>
                                             </div>
                                         </div>
                                     {% endif %}
+                                {% endif %}
                             {% endfor %}
                         </div>
                     </div>

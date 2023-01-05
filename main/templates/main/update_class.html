@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<br><br>
+<div class="container">
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ update_form.as_p }}
+        <br>
+        <input type="submit" value="Update" class="btn btn-secondary"> <a href="{% url 'classes' %}" class="btn btn-secondary">Return</a>
+
+</div>
+{% endblock %}

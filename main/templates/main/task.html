@@ -1,0 +1,159 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    {% if messages %}
+            {% for msg in messages %}
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                    </symbol>
+                </svg>
+                <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                    <div>
+                        {{msg}} 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="container-fluid justify-content-start p-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8">
+                        <h1> Tasks </h1>
+                    </div>
+                    <div class="col-4 text-end">
+                        <a class="btn btn-outline-secondary btn-lg text-center" href="{% url 'add_task' %}"> + Add Task</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <h2>Late</h2>
+                                    </div>
+                                    <div class="col-2 text-end">
+                                        <button onclick="hide(3)" type="button" class="btn btn-light">Hide</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="late" class="card-body">
+                                {% for task in late_task %}
+                                    {% if current_user.id == task.classes.user_id %}
+                                        {% if task.completed == False %}
+                                            <br>
+                                            <div class="card border-danger mb-3 shadow p-2 rounded">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h4 class="card-title">{{ task.name }} </h4>
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <a href="{% url 'delete_task' task.id %}" class="btn btn-light"><strong>X</strong></a>
+                                                        </div>
+                                                    </div>
+                                                    <h5 class="card-subtitle mb-2 text-muted">Due Date: {{ task.due_date }}</h5>
+                                                    <p>{{ task.classes }}<br>{{ task.description }}</p>
+                                                </div>
+                                                <div class="card-footer text-muted">
+                                                    <a href="{% url 'update_task' task.id %}" class="card-link btn btn-success">Update/Edit</a>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <h2>In progress</h2>
+                                    </div>
+                                    <div class="col-2 text-end">
+                                        <button onclick="hide(1)" type="button" class="btn btn-light">Hide</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="inProgress" class="card-body">
+                                {% for task in ontime_task %}
+                                    {% if current_user.id == task.classes.user_id %}
+                                        {% if task.completed == False %}
+                                            <br>
+                                            <div class="card shadow p-2 bg-body rounded">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h4 class="card-title">{{ task.name }} </h4>
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <a href="{% url 'delete_task' task.id %}" class="btn btn-light"><strong>X</strong></a>
+                                                        </div>
+                                                    </div>
+                                                    <h5 class="card-subtitle mb-2 text-muted">Due Date: {{ task.due_date }}</h5>
+                                                    <p>{{ task.classes }}<br>{{ task.description }}</p>
+                                                </div>
+                                                <div class="card-footer text-muted">
+                                                    <a href="{% url 'update_task' task.id %}" class="card-link btn btn-success">Update/Edit</a>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <h2>Completed</h2>
+                                    </div>
+                                    <div class="col-2 text-center">
+                                        <button onclick="hide(2)" type="button" class="btn btn-light">Hide</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="completed" class="card-body">
+                                {% for task in tasks %}
+                                    {% if current_user.id == task.classes.user_id %}
+                                        {% if task.completed == True %}
+                                            <br>
+                                            <div class="card bg-success text-dark bg-opacity-25 shadow p-2 rounded">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h4 class="card-title">{{ task.name }} </h4>
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <a href="{% url 'delete_task' task.id %}" class="btn btn-light"><strong>X</strong></a>
+                                                        </div>
+                                                    </div>
+                                                    <h5 class="card-subtitle mb-2 text-muted">Due Date: {{ task.due_date }}</h5>
+                                                    <p>{{ task.classes }}<br>{{ task.description }}</p>
+                                                </div>
+                                                <div class="card-footer text-muted">
+                                                    <a href="{% url 'update_task' task.id %}" class="card-link btn btn-success">Update/Edit</a>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+        

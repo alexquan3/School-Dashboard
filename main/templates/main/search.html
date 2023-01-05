@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    {% if searched %}
+        <h1>Searched for "{{searched}}"</h1>
+        <h2>Classes</h2>
+        {% for class in classes %}
+            <a href="{% url 'display_class' class.id %}">{{ class }}</a>
+        {% endfor %}   
+        <br><br>
+        <h2>Tasks</h2>
+        {% for task in tasks %}
+        <a href="{% url 'display_task' task.id %}">{{ task }}</a>
+        {% endfor %}  
+     
+    {% else %}
+        didnt search...
+    {% endif %}
+{% endblock %}
