@@ -1,0 +1,102 @@
+{% extends 'Main/base.html' %}
+
+{% block content %}
+    <div class="container justify-content-center p-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <h1> Classes </h1>
+                </div>
+                <div class="col-4 text-end">
+                    <a class="btn btn-outline-secondary btn-lg text-center" href=""> + Add Class</a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-10">
+                                    <h2>In progress</h2>
+                                </div>
+                                <div class="col-2 text-end">
+                                    <button onclick="hide(1)" type="button" class="btn btn-light">Hide</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="inProgress" class="card-body">
+                            {% for class in classes %}
+                                    {% if class.completed == False %}
+                                        <br>
+                                        <div class="card shadow p-2 bg-body rounded">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <h4 class="card-title">{{ class }} </h4>
+                                                    </div>
+                                                    <div class="col text-end">
+                                                        <a href="{% url 'delete_class' class.id %}" class="btn btn-light"><strong>X</strong></a>
+                                                    </div>
+                                                </div>
+                                                <h5 class="card-subtitle mb-2 text-muted">{{ class.course_code }}</h5>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                <a href="" class="card-link btn btn-info">Show More</a>
+                                                <a href="" class="card-link btn btn-success">Update/Edit</a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-10">
+                                    <h2>Completed</h2>
+                                </div>
+                                <div class="col-2 text-center">
+                                    <button onclick="hide(2)" type="button" class="btn btn-light">Hide</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="completed" class="card-body">
+                            {% for class in classes %}
+                                    {% if class.completed == True %}
+                                        <br>
+                                        <div class="card bg-success text-dark bg-opacity-25 shadow p-2 rounded">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <h4 class="card-title">{{ class }} </h4>
+                                                    </div>
+                                                    <div class="col text-end">
+                                                        <a href="" class="btn btn-light"><strong>X</strong></a>
+                                                    </div>
+                                                </div>
+                                                <h5 class="card-subtitle mb-2 text-muted">{{ class.course_code }}</h5>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                <a href="" class="card-link btn btn-info">Show More</a>
+                                                <a href="" class="card-link btn btn-success">Update/Edit</a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+    
