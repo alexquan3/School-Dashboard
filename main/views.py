@@ -16,7 +16,7 @@ def home(request):
     filterTask = []
 
     gradePoint = 0
-    completed = 9
+    completed = 0
     count = 0
     currClass = 0
     currClassList = []
@@ -36,8 +36,10 @@ def home(request):
         if current_user.id == t.classes.user_id:
             filterTask.append(t)
 
-    
-    GPA = round(gradePoint/count, 1)
+    if (count > 0):
+        GPA = round(gradePoint/count, 1)
+    else: 
+        GPA=0
 
     pieChartData = [completed, 33 - completed]
     pieChartLabel = ['Completed', 'Uncompleted']
