@@ -11,8 +11,10 @@ Other operations include; Search function, CRUD, login/logout authentication, an
 https://school-dashboard-production.up.railway.app
 
 Guest Login with Values: 
-Guest
-guestpassword1
+
+Username: Guest
+
+Password: guestpassword1
 
 # Technologies
 Python, HTML, JavaScript
