@@ -74,7 +74,8 @@ def home(request):
     taskData = [lateTask, inProgressTask, compeletedTask]
     taskLabel = ['Late','In Progress','Complete']
     print(taskData)
-    return render(request, 'Main/home.html', {'classes': filterClass,
+    return render(request, 'main/home.html', {
+        'classes': filterClass,
         'tasks': filterTask, 
         'current_user': current_user,
         'current_datetime': current_datetime,
