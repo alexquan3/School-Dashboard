@@ -63,7 +63,6 @@ def tasks(request):
             late_task.append(t)
         else:
             ontime_task.append(t)
-
     return render(request, 'main/task.html', {'tasks': tasks,'late_task':  late_task, 'ontime_task':ontime_task, 'current_user': current_user})
 
 @login_required(login_url='login')

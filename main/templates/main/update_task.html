@@ -7,7 +7,6 @@
     <form action="" method="POST">
         {% csrf_token %}
         {{ update_form.as_p }}
-        {{ update_form }}
         <br>
         <input type="submit" value="Update" class="btn btn-secondary"> <a href="{% url 'tasks' %}" class="btn btn-secondary">Return</a>
 

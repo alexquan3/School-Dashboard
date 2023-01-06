@@ -15,11 +15,11 @@ class Classes(models.Model):
     course_code = models.CharField(max_length=10, null=True)
     semester = models.CharField(max_length=6,choices=SEMESTER_CHOICES,default='FALL')
     grade = models.CharField(max_length=2, blank=True,null=True)
-    GPA = models.DecimalField(max_digits=6, decimal_places=2,blank=True, default=0 , validators=[
+    GPA = models.DecimalField(max_digits=6, decimal_places=2,blank=True, null=True, validators=[
             MaxValueValidator(12.00),
             MinValueValidator(1.00)
         ])
-    completed = models.BooleanField(blank=True,default='False')
+    completed = models.BooleanField(blank=True,default=False)
       
     def __str__(self):
         return self.name
@@ -28,7 +28,7 @@ class Tasks(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank =True)
     due_date = models.DateField()
-    completed = models.BooleanField(blank=True,default='False')
+    completed = models.BooleanField(blank=True,default=False)
     classes = models.ForeignKey(Classes, blank=True, null=True, on_delete=models.CASCADE)
     
     def __str__(self):
