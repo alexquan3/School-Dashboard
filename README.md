@@ -17,10 +17,10 @@ Username: Guest
 Password: guestpassword1
 
 # Technologies
-Python, HTML, JavaScript
+Languages: Python, HTML/CSS, JavaScript
 
-Django, Bootstrap
+Libraries/Frameworks: Django, Bootstrap
 
-Postgres SQL 
+Database: PostgreSQL
 
-Railway 
+Hosted with: Railway 
