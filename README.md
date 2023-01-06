@@ -12,9 +12,9 @@ https://school-dashboard-production.up.railway.app
 
 Guest Login with Values: 
 
-Username: Guest
+Username: Guest123
 
-Password: guestpassword1
+Password: guestpassword123
 
 # Technologies
 Languages: Python, HTML/CSS, JavaScript
