@@ -1,7 +1,392 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+{% if messages %}
+    {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div>
+                {{msg}} 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
 
-<h1>Deployment success! you are now Live</h1>
+<div class="container p-4 mt-4">
+    <div class="row">
+        <div class="col-10">
+            <h3> Hello {{ current_user }}, </h3>
+        </div>
+        <div class="col-2 text-end">
+             <h3>{{current_datetime}}</h3>
+        </div>
+    </div>
+    <hr>
 
+    <div class="container">
+        <h3 class="pt-2">Overview</h3>
+        <div class="card p-4">
+            <div class="row">
+                <div class="col">
+                    <div class="card" id="GPA-colour">
+                        <div class="card-body">
+                            <strong>GPA</strong> 
+                            <br>
+                            {{ GPA }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" id="Grad-colour">
+                        <div class="card-body">
+                            <strong>Till Graduation</strong>
+                            <br>
+                            {{ completed }} / 33
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" id="class-colour">
+                        <div class="card-body">
+                            <strong>Current Classes</strong>
+                            <br> 
+                            {{ currClass }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body" id="task-colour">
+                            <strong>Incomplete Tasks</strong>
+                            <br>
+                            {{ uncompleteTask }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h3 class="pt-2">Dashboard</h3>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">GPA</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Graduation Progression</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Task Break Down</button>
+                            </li>
+                          </ul>
+                          <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row">
+                                    <div style="height: 500px">
+                                        <canvas id="myChart"></canvas>
+                                    </div>
+                                <div class="row" id="addItem">
+                                        
+                                </div>
+                                </div>
+                                  
+                                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                
+                                <script> 
+                                var barData = {
+                                    labels: [{% for label in labels %}'{{label}}',{% endfor %}],
+                                    datasets: [{
+                                        label: 'Grade per Class',
+                                        data: [{% for data in datas %}'{{data}}',{% endfor %}],
+                                        backgroundColor: ['rgba(75, 192, 192, 0.2)'],
+                                        borderColor: ['rgba(75, 192, 192, 0.2)'],    
+                                        borderWidth: 1,
+                                    }]
+                                }
+                                
+                                
+                                var barOptions = {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    layout: {
+                                        padding: 20
+                                    },
+                                    plugins:{
+                                            title: {
+                                                display: true,
+                                                text: 'Marks per class',
+                                                padding: {
+                                                    top: 10,
+                                                    bottom: 10
+                                                },
+                                                font: {
+                                                    size: 24,
+
+                                                }
+                                            },
+                                            legend: {
+                                                position: "bottom"
+                                            }
+                                        },
+                                    scales: {
+                                        y: {
+                                        title: {
+                                            display: true,
+                                            text: 'Marks'
+                                            }
+                                        },
+                                        x: {
+                                        title: {
+                                            display: true,
+                                            text: 'Course Code'
+                                            }
+                                        }             
+                                    },                
+                                }
+
+
+                                const BarConfig = {
+                                    type: 'bar',
+                                    data: barData,
+                                    options: barOptions,
+                                };
+                                const ctx = document.getElementById('myChart');
+                                var myChart = new Chart(ctx, BarConfig);
+
+                                document.getElementById('myChart').onclick = function(evt){
+                                    const points = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+                                    if (points.length) {
+                                        const firstPoint = points[0];
+                                        const label = myChart.data.labels[firstPoint.index];
+
+                                        {% for data in filterClass %}
+                                        
+                                        if (label === '{{data.course_code}}')
+                                        {
+                                            const addItem = document.getElementById('addItem');
+                                            addItem.innerHTML = '';
+
+                                            const p = document.createElement('p');
+
+                                            const name = document.createTextNode('{{data.name}}')
+                                            const semester = document.createTextNode('{{data.semester}}')
+                                            const grade = document.createTextNode('{{data.grade}}')
+                                            const GPA = document.createTextNode('{{data.GPA}}')
+
+                                            p.appendChild(name);
+                                            p.appendChild(semester);
+                                            p.appendChild(grade);
+                                            p.appendChild(GPA);
+
+                                            addItem.appendChild(p);
+                                        }
+
+                                        {% endfor %}
+
+            
+                                    }
+
+                                }
+
+                                </script>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="chart-container" style="position: relative; height:40vh; width:60vw">
+                                    <canvas id="pieChart"></canvas>
+                                </div>
+                                <br>
+                                <strong>Completed: {{ compeletedPercentage }}%</strong>
+
+                                <script> 
+                                    const pie = document.getElementById('pieChart').getContext('2d');
+                                    const data = {
+                                        labels: [{% for label in pieChartLabel %}'{{label}}',{% endfor %}],
+                                        datasets: [{
+                                            label: '',
+                                            data: [{% for data in pieChartData %}'{{data}}',{% endfor %}],
+                                            backgroundColor: [
+                                            'rgba(255, 205, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            ],
+                                            hoverOffset: 4
+                                        }],
+                                    };
+                                    var options = {
+                                        maintainAspectRatio: false
+                                    };
+
+                                    const config = {
+                                        type: 'pie',
+                                        data: data,
+                                        options: options,
+                                    };
+
+                                    new Chart(pie,config);
+                                </script>
+                            </div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="row p-3">
+                                            <div class="col">
+                                                <h4>Late</h4>
+                                                <hr>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div id="late"></div>
+                                                </div>
+                                                <div class="col" id="dateLate">
+                                                </div>
+                                            </div>     
+                                        </div>
+                                        <div class="row p-3">
+                                            <div class="col">
+                                                <h4>In Progress</h4>
+                                                <hr>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div id="inprogress"></div>
+                                                </div>
+                                                <div class="col" id="dateInProgress">
+                                                </div>
+                                            </div>          
+                                        </div>
+                                        <div class="row p-3">
+                                            <div class="col">
+                                                <h4>Complete</h4>
+                                                <hr>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div id="complete"></div>
+                                                </div>
+                                                <div class="col" id="dateComplete">
+                                                </div>
+                                            </div>                                     
+                                        </div>                                               
+                                    </div>        
+                                    <div class="col-8">
+                                        <div class="chart-container" style="position: relative; height:40vh; width:40vw">
+                                            <canvas id="doughnutChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <script> 
+                                    const taskData = {
+                                        labels: [{% for label in taskLabel %}'{{label}}',{% endfor %}],
+                                        datasets: [{
+                                            label: 'My First Dataset',
+                                            data: [{% for data in taskData %}'{{data}}',{% endfor %}],
+                                            backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(255, 205, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            ],
+                                            hoverOffset: 4
+                                        }]
+                                    };
+
+                                    const Taskconfig = {
+                                        type: 'doughnut',
+                                        data: taskData,
+                                        options: {
+                                            maintainAspectRatio: false
+                                        }
+                                    };
+                                    const doughnut = document.getElementById('doughnutChart');
+                                    var myDougnut = new Chart(doughnut,Taskconfig);
+
+                                    document.getElementById('doughnutChart').onclick = function(evt){
+                                        const points = myDougnut.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+                                        if (points.length) {
+                                            const firstPoint = points[0];
+                                            const label = myDougnut.data.labels[firstPoint.index];
+
+                                            if (label === 'Late'){
+                                                const lateItem = document.getElementById('late');
+                                                const dateItem = document.getElementById('dateLate');
+                                                const lateInfo = document.querySelector("#late");
+                                                if (lateInfo.childNodes.length == 0){
+                                                    lateItem.innerHTML = '';
+                                                    dateItem.innerHTML = '';
+                                                    {% for task in lateTaskList %}
+                                                        lateItem.innerHTML += '{{ task }}' + '<br/>';  
+                                                        dateItem.innerHTML += '{{ task.due_date }}' + '<br/>';
+                                                    {% endfor %}
+                                                }
+                                                else {
+                                                    lateItem.innerHTML = '';
+                                                    dateItem.innerHTML = '';
+                                                }
+
+                                            }
+                                            else if (label === 'Complete')
+                                            {
+                                                const lateItem = document.getElementById('complete');
+                                                const dateItem = document.getElementById('dateComplete');
+                                                const lateInfo = document.querySelector("#complete");
+                                                if (lateInfo.childNodes.length == 0){
+                                                    lateItem.innerHTML = '';
+                                                    dateItem.innerHTML = '';
+                                                    {% for task in compeletedTaskList %}
+                                                        lateItem.innerHTML += '{{ task }}' + '<br/>';  
+                                                        dateItem.innerHTML += '{{ task.due_date }}' + '<br/>';
+                                                    {% endfor %}
+                                                }
+                                                else {
+                                                    lateItem.innerHTML = '';
+                                                    dateItem.innerHTML = '';
+                                                }
+                                            }
+                                            else{
+                                                const lateItem = document.getElementById('inprogress');
+                                                const dateItem = document.getElementById('dateInProgress');
+                                                const lateInfo = document.querySelector("#inprogress");
+                                                if (lateInfo.childNodes.length == 0){
+                                                    lateItem.innerHTML = '';
+                                                    dateItem.innerHTML = '';
+                                                    {% for task in inProgressTaskList %}
+                                                        lateItem.innerHTML += '{{ task }}' + '<br/>';  
+                                                        dateItem.innerHTML += '{{ task.due_date }}' + '<br/>';
+                                                    {% endfor %}
+                                                }
+                                                else {
+                                                    lateItem.innerHTML = '';
+                                                    dateItem.innerHTML = '';
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class="pt-2">Current Classes</h3>
+        <div class="card">
+            <div class="card-body">
+                {% for class in currClassList %}
+                    <div class="row pt-2">
+                        <div class="col-8">
+                            <h5 class="card-title">{{class}}</h5>
+                        </div>
+                        <div class="col-2">
+                            <h5 class="card-text text-end">{{class.course_code}}</h5>
+                        </div>
+                        <div class="col-2 text-end"><a href="{% url 'display_class' class.id %}" class="btn btn-outline-secondary">Show More</a></div>
+                    </div>    
+                {% endfor %}       
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
