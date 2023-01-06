@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-=k@__z77eq9y(a8f&)db*68g6+rwf_ldw!*y99w!cb=2oa%c*r
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://school-dashboard-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://*.school-dashboard-production.up.railway.app']
 
 # Application definition
 
