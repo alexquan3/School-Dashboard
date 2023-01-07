@@ -19,7 +19,7 @@ Password: guestpassword123
 # Technologies
 Languages: Python, HTML/CSS, JavaScript
 
-Libraries/Frameworks: Django, Bootstrap
+Libraries/Frameworks: Django, Bootstrap, chartjs
 
 Database: PostgreSQL
 
