@@ -12,15 +12,15 @@ https://school-dashboard-production.up.railway.app
 
 Guest Login with Values: 
 
-Username: Guest
+Username: Guest123
 
-Password: guestpassword1
+Password: guestpassword123
 
 # Technologies
-Python, HTML, JavaScript
+Languages: Python, HTML/CSS, JavaScript
 
-Django, Bootstrap
+Libraries/Frameworks: Django, Bootstrap, chartjs
 
-Postgres SQL 
+Database: PostgreSQL
 
-Railway 
+Hosted with: Railway 
