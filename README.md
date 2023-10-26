@@ -1,11 +1,11 @@
 # School Dashboard 
-School Dashboard is a full stack project that has 2 main functionalities. 
+School Dashboard is a full-stack project that has 2 main functionalities. 
 1. Input current or previous courses. 
-2. Set up a schedule on when deadlines and assessment are due.
+2. Set up a schedule for when deadlines and assessments are due.
 
-Also includes; GPA calculator and graduation tracker,  
+Also includes; GPA calculator and graduation tracker
 
-Other operations include; Search function, CRUD, login/logout authentication, and resticted areas if not logged in.
+Other operations include the search function, CRUD, login/logout authentication, and restricted areas if not logged in.
 
 # Website Link
 https://school-dashboard-production.up.railway.app
