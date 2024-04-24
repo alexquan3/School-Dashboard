@@ -6,7 +6,7 @@ from django.contrib import messages
 import datetime
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def home(request):
     classes = Classes.objects.all()
     tasks = Tasks.objects.all()
@@ -99,18 +99,18 @@ def home(request):
         'currClassList': currClassList,
         })
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def classes(request):
     classes = Classes.objects.all()
     current_user = request.user
     return render(request, 'main/classes.html', {'classes': classes, 'current_user': current_user})
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def display_class(request, class_id):
     display_class = Classes.objects.get(pk=class_id)
     return render(request, 'main/display_class.html', {'display_class': display_class})
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def add_class(request):
     class_form = ClassForm(request.POST or None)
     if request.method == "POST":
@@ -123,7 +123,7 @@ def add_class(request):
     return render(request, 'main/add_class.html', {'form': class_form})
 
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def update_class(request, class_id):
     update_class = Classes.objects.get(pk=class_id)
     update_form = ClassForm(request.POST or None, instance=update_class)
@@ -133,7 +133,7 @@ def update_class(request, class_id):
             return redirect('classes')
     return render(request, 'main/update_class.html', {'update_class': update_class, 'update_form': update_form})
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def delete_class(request, class_id):
     delete_class = Classes.objects.get(pk=class_id)
     if request.method == 'POST':
@@ -141,7 +141,7 @@ def delete_class(request, class_id):
         return redirect('classes')
     return render(request, 'main/delete_class.html', {'delete_class': delete_class})
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def tasks(request):
     tasks = Tasks.objects.all()
     current_user = request.user
@@ -155,7 +155,7 @@ def tasks(request):
             ontime_task.append(t)
     return render(request, 'main/task.html', {'tasks': tasks,'late_task':  late_task, 'ontime_task':ontime_task, 'current_user': current_user})
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def add_task(request):
     form = TaskForm(request.POST or None)
     if request.method == "POST":
@@ -165,7 +165,7 @@ def add_task(request):
             return redirect('add_task')
     return render(request, 'main/add_task.html', {'form': form})
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def update_task(request, task_id):
     update_task = Tasks.objects.get(pk=task_id)
     update_form = TaskForm(request.POST or None, instance=update_task)
@@ -175,7 +175,7 @@ def update_task(request, task_id):
             return redirect('tasks')
     return render(request, 'main/update_task.html', {'update_task': update_class, 'update_form': update_form})
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def delete_task(request, task_id):
     delete_task = Tasks.objects.get(pk=task_id)
     if request.method == 'POST':
@@ -183,12 +183,12 @@ def delete_task(request, task_id):
         return redirect('tasks')
     return render(request, 'main/delete_task.html', {'delete_task': delete_task})
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def display_task(request, task_id):
     display_task = Tasks.objects.get(pk=task_id)
     return render(request, 'main/display_task.html', {'display_task': display_task})
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def search(request):
     if request.method == "POST":
         searched = request.POST['searched']
